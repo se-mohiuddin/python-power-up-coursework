@@ -1,0 +1,87 @@
+#main
+from books import Book
+from patrons import Patron
+from library import Library
+from library import Administrator
+from catalog import Catalog
+
+library = Library()
+administrator = Administrator()
+catalog = Catalog(library)
+
+# Example usage
+
+# Creating instances of the Book class
+book1 = Book("The Godfather", "Mario Puzo", "1234567891245", 1)
+book2 = Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "9876543210987", 3)
+book3 = Book("To Kill a Mockingbird", "Harper Lee", "6543210987654", 8)
+book4 = Book("1984", "George Orwell", "3210987654321", 2)
+
+# Creating instances of the Patron class
+patron1 = Patron("Mohiuddin", 1001)
+patron2 = Patron("Zulqi", 1002)
+patron3 = Patron("Moiz", 1003)
+patron4 = Patron("Moni", 1004)
+
+#object of Library class
+library = Library()
+
+#adding books to library
+library.add_book(book1)
+library.add_book(book2)
+library.add_book(book3)
+library.add_book(book4)
+
+#adding patrons to library
+library.add_patron(patron1)
+library.add_patron(patron2)
+library.add_patron(patron3)
+library.add_patron(patron4)
+
+#checking other methods
+
+#patron borrowing book
+library.borrow_book(patron1, book1)
+#patron has already borrowed this book
+library.borrow_book(patron1, book1)
+#patron cannot borrow a book due to all copies are already borrowed
+library.borrow_book(patron2, book1)
+#patron wants a reserve for this book
+library.reserve_book(patron2, book1)
+#another patron also wants a reserve for this book (it will be queued)
+library.reserve_book(patron3, book1)
+#another patron also wants a reserve for this book (it will be queued)
+library.reserve_book(patron4, book1)
+#patron cannot reserve a book that he has already borrowed
+library.reserve_book(patron1, book1)
+#patron has returned his borrowed book (overdue charges will be charged if patron exceeds 14-days limit of borrowing book)
+library.return_book(patron1, book1)
+#patron can not return a book if he hasn't borrowed
+library.return_book(patron3, book2)
+#patron borrowing a book
+library.borrow_book(patron2, book1)
+library.borrow_book(patron3, book3)
+library.borrow_book(patron4, book4)
+#administrator adding book in library
+book5 = Book("Python", "developer", 958746123652, 4)
+administrator.add_book(book5)
+#administrator deleting book from library
+administrator.remove_book(book5)
+#administrator adding patron in library
+patron5 = Patron("ai", 1010)
+administrator.add_patron(patron5)
+#administrator deleting patron from library
+administrator.remove_patron(patron5)
+#administrator can not remove a book or patron that does not exist in library
+administrator.remove_patron(patron5)
+#saving data of this library
+filename = 'test1.pickle'
+library.save_data(filename)
+#showing all catalogs
+catalog = Catalog(library)
+#all book
+catalog.show_all_books()
+#all patrons
+catalog.show_all_patrons()
+#all borrowed book data
+catalog.show_borrowed_books()
